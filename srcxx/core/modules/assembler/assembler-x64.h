@@ -297,7 +297,7 @@ public:
   void EmitRegisterREX(Register reg) {
     if (reg.size() != 64)
       UNIMPLEMENTED();
-    uint8_t rex = GenREX(true, reg.size() == 64, false, false, reg.code() > 7);
+    uint8_t rex = GenREX(true, reg.size() == 64, reg.code() > 7, false, false);
     if (!rex)
       Emit1(rex);
   }
@@ -306,7 +306,7 @@ public:
     if (reg.size() != 64)
       UNIMPLEMENTED();
     uint8_t rex = operand.rex();
-    rex |= GenREX(true, reg.size() == 64, false, false, reg.code() > 7);
+    rex |= GenREX(true, reg.size() == 64, reg.code() > 7, false, false);
     if (rex != 0) {
       Emit1(rex);
     }
@@ -366,7 +366,8 @@ public:
 
   void Emit_OperandEn_Register_Operand(Register reg, Operand &operand) {
     ModRM modRM = *(ModRM *)&operand.encoding_[0];
-    EmitModRM(modRM.Mod, reg.code(), modRM.RM);
+    uint8_t opcode = reg.code();
+    EmitModRM(modRM.Mod, opcode < 8 ? opcode : opcode - 8, modRM.RM);
     buffer_->EmitBuffer(&operand.encoding_[1], operand.length_ - 1);
   }
 

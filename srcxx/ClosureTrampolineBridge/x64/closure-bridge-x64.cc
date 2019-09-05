@@ -88,6 +88,9 @@ void *get_closure_bridge() {
 
   __ EmitBuffer(popfq, 1);
 
+  AssemblyCode *code = AssemblyCode::FinalizeFromTurboAssember(&turbo_assembler_);
+  closure_bridge = (void *)code->raw_instruction_start();
+
 #endif
   return (void *)closure_bridge;
 }
