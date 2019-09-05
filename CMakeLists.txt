@@ -18,7 +18,7 @@ option(SHARED "Build shared library" OFF)
 
 option(HOOKZZ_DLOG "Enable debug log" OFF)
 
-option(Plugin.DynamicBinaryInstrument "Enable Dynamic Binary Instrument" OFF)
+option(Plugin.DynamicBinaryInstrument "Enable Dynamic Binary Instrument" ON)
 
 option(Plugin.FunctionWrapper "Enable  Function Wrapper, Add PreCall and PostCall for the origin function" OFF)
 
